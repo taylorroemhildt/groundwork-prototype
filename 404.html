@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  var l = window.location;
+  l.replace(l.protocol+'//'+l.hostname+(l.port?':'+l.port:'')+'/groundwork-prototype/?p='+encodeURIComponent(l.pathname+l.search)+'&q='+encodeURIComponent(l.hash.slice(1)));
+</script>
+</head>
+</html>
