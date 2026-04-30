@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)file:///Users/taylorroemhildt/Desktop/ClaudeProjects/AI_workshop/with%20GSD/project-1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project 01 — Claude in the Front · Praxent AI Workshop</title>
+  <style>
+    /* ── FONTS ── */
+    @font-face {
+      font-family: 'NHD';
+      src: url('fonts/NeueHaasDisplayLight.ttf') format('truetype');
+      font-weight: 300;
+    }
+    @font-face {
+      font-family: 'NHD';
+      src: url('fonts/NeueHaasDisplayRoman.ttf') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'NHD';
+      src: url('fonts/NeueHaasDisplayMediu.ttf') format('truetype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'NHD';
+      src: url('fonts/NeueHaasDisplayBold.ttf') format('truetype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'NHDT';
+      src: url('fonts/NEUEHAASGROTESKTEXT.TTF') format('truetype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'NHDT';
+      src: url('fonts/NEUEHAASGROTESKTEXTMEDIUM.TTF') format('truetype');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'NHDT';
+      src: url('fonts/NEUEHAASGROTESKTEXTBOLD.TTF') format('truetype');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'Pressura';
+      src: url('fonts/GT-Pressura-Mono-Regular-Trial.otf') format('opentype');
+      font-weight: 400;
+    }
+
+    /* ── TOKENS ── */
+    :root {
+      --text-1: #0C0C0C;
+      --text-2: #525252;
+      --text-3: #9A9A9A;
+      --accent: #1A5C3D;
+      --accent-tint: rgba(26, 92, 61, 0.06);
+      --rule: #D5D5D5;
+      --rule-faint: #EBEBEB;
+      --white: #FFFFFF;
+      --display: 'NHD', -apple-system, 'Helvetica Neue', sans-serif;
+      --body: 'NHDT', -apple-system, 'Helvetica Neue', sans-serif;
+      --mono: 'Pressura', 'Courier New', monospace;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: var(--body);
+      font-weight: 400;
+      background: var(--white);
+      color: var(--text-1);
+      line-height: 1.5;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 56px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .topbar span {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── WRAPPER ── */
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 56px; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 80px 0 0;
+      overflow: hidden;
+    }
+    .topo-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hero-number {
+      font-family: var(--display);
+      font-weight: 100;
+      font-size: 172px;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+      position: relative;
+      z-index: 1;
+      user-select: none;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 54px;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text-1);
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-sub {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 19px;
+      color: var(--text-2);
+      margin-top: 12px;
+      max-width: 600px;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── META STRIP ── */
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-top: 52px;
+      border-top: 1px solid var(--rule);
+      position: relative;
+      z-index: 1;
+    }
+    .meta-item {
+      padding: 20px 36px 20px 0;
+      margin-right: 36px;
+      border-right: 1px solid var(--rule);
+    }
+    .meta-item:last-child { border-right: none; margin-right: 0; }
+    .meta-label {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .meta-value {
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--text-1);
+    }
+
+    /* ── SECTION LABEL ── */
+    .sec-label {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    /* ── DESC + SIDEBAR ── */
+    .desc-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 72px;
+      padding: 64px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .desc-text {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.78;
+      color: var(--text-1);
+    }
+    .stretch {
+      margin-top: 32px;
+      padding: 18px 20px;
+      background: var(--accent-tint);
+      border-left: 2px solid var(--accent);
+    }
+    .stretch-label {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stretch-text {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* Sidebar */
+    .sidebar { border-top: 2px solid var(--text-1); padding-top: 22px; }
+    .sidebar-heading {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--text-1);
+      margin-bottom: 20px;
+    }
+    .tip-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .tip-list li {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+      padding-left: 16px;
+      position: relative;
+    }
+    .tip-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .tip-list strong { font-weight: 700; color: var(--text-1); }
+
+    /* ── WORKFLOW ── */
+    .workflow-section {
+      padding: 64px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .workflow-header {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 72px;
+      margin-bottom: 48px;
+    }
+    .workflow-heading {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+    }
+    .workflow-intro {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.75;
+      padding-top: 2px;
+    }
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .wf-item {
+      padding: 28px;
+      border-top: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+    }
+    .wf-item:nth-child(3n) { border-right: none; }
+    .wf-num {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .wf-text {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--text-1);
+      line-height: 1.7;
+    }
+    .wf-text em {
+      font-style: normal;
+      color: var(--text-2);
+    }
+
+    /* ── BRIEF SECTION ── */
+    .brief-section {
+      padding: 64px 0 0;
+      border-top: 1px solid var(--rule);
+    }
+    .brief-header {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 72px;
+      margin-bottom: 56px;
+    }
+    .gw-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-top: 28px;
+    }
+    .gw-tagline {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 10px;
+    }
+    .brief-intro {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.82;
+      padding-top: 28px;
+    }
+    .brief-intro strong {
+      color: var(--text-1);
+      font-weight: 500;
+    }
+
+    /* Challenge */
+    .challenge-sub {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 620px;
+      margin-bottom: 24px;
+    }
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--rule);
+    }
+    .chal-col {
+      padding: 28px;
+      border-right: 1px solid var(--rule);
+    }
+    .chal-col:last-child { border-right: none; }
+    .chal-title {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--text-1);
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--rule-faint);
+    }
+    .chal-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .chal-list li {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.45;
+      padding-left: 16px;
+      position: relative;
+    }
+    .chal-list li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--rule);
+    }
+
+    /* Users */
+    .users-section { margin-top: 64px; }
+    .users-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--rule);
+      margin-top: 24px;
+    }
+    .user-col {
+      padding: 28px 32px 32px 0;
+      border-right: 1px solid var(--rule);
+    }
+    .user-col:last-child { border-right: none; padding-right: 0; }
+    .user-col + .user-col { padding-left: 32px; }
+    .u-name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+      color: var(--text-1);
+    }
+    .u-role {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 5px;
+      margin-bottom: 16px;
+    }
+    .u-bio {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.68;
+    }
+    .u-need {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--text-1);
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule-faint);
+      line-height: 1.5;
+    }
+
+    /* Brand Direction */
+    .brand-section {
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--rule);
+    }
+    .brand-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 24px;
+    }
+    .brand-col { padding: 36px 40px; }
+    .brand-col.is { background: var(--accent); }
+    .brand-col.isnot {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-left: none;
+    }
+    .brand-col-head {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 24px;
+    }
+    .brand-col.is .brand-col-head { color: rgba(255,255,255,0.6); }
+    .brand-col.isnot .brand-col-head { color: var(--text-3); }
+    .brand-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+    .brand-list li {
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .brand-col.is .brand-list li { color: #FFFFFF; }
+    .brand-col.isnot .brand-list li {
+      color: var(--text-3);
+      text-decoration: line-through;
+      text-decoration-color: var(--rule);
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      margin-top: 80px;
+      padding: 20px 0 60px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+    }
+    .page-footer span {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>Praxent AI Workshop · April 2026</span>
+  <span>Internal · Design Team Brief</span>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-number">01</div>
+    <h1 class="hero-title">Claude in the Front</h1>
+    <p class="hero-sub">Use AI for generating a user experience — UI, UX, and prototype</p>
+
+    <div class="meta-strip">
+      <div class="meta-item">
+        <span class="meta-label">Mentor</span>
+        <span class="meta-value">Nick Comito</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Workshop</span>
+        <span class="meta-value">Praxent AI · April 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deliverable</span>
+        <span class="meta-value">Interactive Prototype</span>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- DESCRIPTION + SIDEBAR -->
+  <div class="desc-grid">
+    <div>
+      <span class="sec-label">The Brief</span>
+      <p class="desc-text">A project has just kicked off. You're the designer tasked with wowing the client on the very first presentation. Using a fictitious product brief (provided below), you'll run through the entire design process with Claude as your co-designer — generating concepts, iterating on them, and shipping a prototype that's not just functional, but surprising.</p>
+      <div class="stretch">
+        <span class="stretch-label">Stretch Goal</span>
+        <p class="stretch-text">Create a small style guide / design system alongside the prototype, using Claude as your design systems partner.</p>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-heading">Tips for this project</div>
+      <ul class="tip-list">
+        <li>Use <strong>Impress Generate</strong> for concept generation and iteration</li>
+        <li>Run <strong>Impress Evaluate</strong> or <strong>Impeccable</strong> to score and critique your work</li>
+        <li>Use <strong>Impeccable</strong> for senior-level design critique</li>
+        <li>Use Claude for production-level work</li>
+        <li>Connect to Figma + Figma MCP for creative exploration</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HOW TO USE CLAUDE -->
+  <section class="workflow-section">
+    <div class="workflow-header">
+      <h2 class="workflow-heading">How to use Claude effectively</h2>
+      <p class="workflow-intro">Claude is your co-designer, not a search engine. The designers who get the most out of it treat it like a senior collaborator — give it context, push back on its output, and iterate in conversation rather than starting from scratch each time.</p>
+    </div>
+    <div class="workflow-grid">
+      <div class="wf-item">
+        <span class="wf-num">01</span>
+        <p class="wf-text">Start broad — ask Claude to generate <em>3 stylistically distinct concepts</em> before converging on a direction.</p>
+      </div>
+      <div class="wf-item">
+        <span class="wf-num">02</span>
+        <p class="wf-text">Use explicit critique prompts: <em>"What's weak about this design? What would a senior designer change?"</em></p>
+      </div>
+      <div class="wf-item">
+        <span class="wf-num">03</span>
+        <p class="wf-text">Describe the user, not just the screen — give Claude context about <em>who's using this and why.</em></p>
+      </div>
+      <div class="wf-item">
+        <span class="wf-num">04</span>
+        <p class="wf-text">Iterate in conversation — each screen should <em>build on the last,</em> not restart fresh each time.</p>
+      </div>
+      <div class="wf-item">
+        <span class="wf-num">05</span>
+        <p class="wf-text">For novel features, ask: <em>"What's a feature here that would surprise and delight a user?"</em></p>
+      </div>
+      <div class="wf-item">
+        <span class="wf-num">06</span>
+        <p class="wf-text">Give Claude feedback and explicitly tell it to <em>document (remember) that feedback</em> for future sessions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT BRIEF -->
+  <section class="brief-section">
+    <div class="brief-header">
+      <div>
+        <span class="sec-label">Project Brief</span>
+        <div class="gw-name">Groundwork</div>
+        <div class="gw-tagline">Small business lending</div>
+      </div>
+      <p class="brief-intro">Groundwork is a fintech startup offering working capital loans to small businesses — think the local catering company that needs to buy equipment before a big contract, or the independent retailer bridging a slow season. They are not a bank. They don't want to feel like one. Their promise: <strong>fast, fair, human</strong> — money that works with you, not against you.</p>
+    </div>
+
+    <!-- Design Challenge -->
+    <span class="sec-label">Design Challenge</span>
+    <p class="challenge-sub">Design the end-to-end digital experience for a small business owner applying for and managing a working capital loan. The experience spans three core moments.</p>
+    <div class="challenge-grid">
+      <div class="chal-col">
+        <div class="chal-title">Owner Dashboard</div>
+        <ul class="chal-list">
+          <li>Loan summary + status</li>
+          <li>Repayment schedule</li>
+          <li>Quick actions</li>
+          <li>Business health snapshot</li>
+        </ul>
+      </div>
+      <div class="chal-col">
+        <div class="chal-title">Loan Application</div>
+        <ul class="chal-list">
+          <li>Short, low-anxiety flow</li>
+          <li>Amount + purpose</li>
+          <li>Basic business info</li>
+          <li>Soft eligibility check</li>
+          <li>Status + follow-up</li>
+        </ul>
+      </div>
+      <div class="chal-col">
+        <div class="chal-title">Application Tracker</div>
+        <ul class="chal-list">
+          <li>Decision + offer review</li>
+          <li>Document requests</li>
+          <li>Ongoing loan management</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- User Scenarios -->
+    <div class="users-section">
+      <span class="sec-label">User Scenarios</span>
+      <div class="users-grid">
+        <div class="user-col">
+          <div class="u-name">Rosa</div>
+          <div class="u-role">Catering company · 6 employees</div>
+          <p class="u-bio">Needs $30k to buy a commercial oven before a contracted event season. Not financially savvy. Distrusts banks after a bad experience.</p>
+          <p class="u-need">"Needs to feel respected, not judged."</p>
+        </div>
+        <div class="user-col">
+          <div class="u-name">Marcus</div>
+          <div class="u-role">Independent hardware store</div>
+          <p class="u-bio">Has used traditional SBA loans before. Wants speed and transparency — he's done waiting 6 weeks for a decision.</p>
+          <p class="u-need">"Values plain language over financial jargon."</p>
+        </div>
+        <div class="user-col">
+          <div class="u-name">Priya</div>
+          <div class="u-role">Co-founder, streetwear brand</div>
+          <p class="u-bio">Tech-native. Expects a clean, app-quality experience. Skeptical of anything that feels corporate or generic.</p>
+          <p class="u-need">"Wants to see her numbers, not be talked at."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand Direction -->
+    <div class="brand-section">
+      <span class="sec-label">Brand Direction</span>
+      <div class="brand-grid">
+        <div class="brand-col is">
+          <div class="brand-col-head">This is Groundwork</div>
+          <ul class="brand-list">
+            <li>Warm, direct, confident</li>
+            <li>Plain English — always</li>
+            <li>Feels like a trusted advisor</li>
+            <li>Progress over complexity</li>
+            <li>Celebrates small business wins</li>
+            <li>Calm in moments of stress</li>
+          </ul>
+        </div>
+        <div class="brand-col isnot">
+          <div class="brand-col-head">This is not Groundwork</div>
+          <ul class="brand-list">
+            <li>No bank-blue palettes</li>
+            <li>No dense legal language upfront</li>
+            <li>Not cheeky, startup-quirky</li>
+            <li>No hollow motivational copy</li>
+            <li>Not sterile or clinical</li>
+            <li>No jargon without explanation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <span>Praxent AI Workshop · April 2026</span>
+    <span>Confidential · Internal Use Only</span>
+  </div>
+
+</div>
+
+
+</body></html>
